@@ -43,17 +43,7 @@ for (let atributo in peleador){
 */
 
 //Lab 4
-function generateNumberString(num) {
-    let result = "";
-    for (let i = 0; i <= num; i++) {
-      iSquared = i*i;
-      iCubed= i*i*i;  
-      result += i.toString() + ' cuadrado =  ' + iSquared.toString() + ' cubico= ' + iCubed.toString()+', ';
-    }
-    console.log(result);;
-}
-
-  function randomNumber() {
+function randomNumber() {
     let randomNumber = Math.random();
     let min = 1;
     let max = 10;
@@ -61,12 +51,67 @@ function generateNumberString(num) {
     return randomNumInRange;
 }
 
+function posAndNeg(array) {
+    let pos = 0;
+    let neg = 0;
+for (let i = 0; i < array.length; i++) {
+    const element = array[i];
+    if(element < 0){
+        neg++;
+    }else{
+        pos++;
+    }
+}
+let answer = 'Los numeros positivos son: '+ pos + '. Los numeros negativos son: ' + neg;
+return answer;
+}
+
+function promedio(array) {
+    sum = 0;
+    for (let i = 0; i < array.length; i++) {
+        const element = array[i];
+        sum += element;
+
+    }
+    return sum;
+    
+}
+
+function inverse(num){
+    let numString = num.toString();
+    let numVolteado = numString.split('').reverse().join('');
+    let result = parseInt(numVolteado);
+    return result;
+}
+
 
 //Ejercicio 1
+/*
+// Solicitar al usuario un número con un prompt
+const numero = prompt("Ingrese un número:");
 
-//const num = prompt("Ingresa un numero para el ejercicio 1")
-//generateNumberString(num)
+// Verificar si la entrada es válida
 
+// Comenzar la tabla
+document.write("<table>");
+document.write("<thead><tr><th>Número</th><th>Cuadrado</th><th>Cubo</th></tr></thead>");
+document.write("<tbody>");
+
+// Generar los números, cuadrados y cubos
+for (let i = 1; i <= numero; i++) {
+    const cuadrado = i * i;
+    const cubo = i * i * i;
+    document.write("<tr>");
+    document.write("<td>" + i + "</td>");
+    document.write("<td>" + cuadrado + "</td>");
+    document.write("<td>" + cubo + "</td>");
+    document.write("</tr>");
+}
+
+// Finalizar la tabla
+document.write("</tbody>");
+document.write("</table>");
+*/
 
 //Ejercicio 2
 /* 
@@ -90,3 +135,61 @@ if (userAnswer == res.toString()) {
 
 
 //Ejercicio 3
+/* 
+const array = [-1, 3, -5, 8,-10, 6, 15, -15, -6, -2]
+console.log(posAndNeg(array));
+*/
+
+//Ejercicio 4
+/*
+arrayExercise2 = [1,2,3,4,5,6,7,8,9,10]
+console.log(promedio(arrayExercise2))
+*/
+
+//Ejercicio 5
+/* 
+    let num = 987654321;
+    console.log(inverse(num));
+
+*/
+
+//Ejercicio 6
+const ventasPropias = prompt('Ingresa la cantidad de malangas que tu vendes')
+const ventasAjenas = prompt('Ingresa la cantidad de malangas que vende tu socio')
+const ventasDeNegocio = prompt('Ingresa la cantidad de malangas que vende el negocio al que le distribuyes')
+
+const ventasTotales = parseInt(ventasAjenas)+parseInt(ventasDeNegocio)+parseInt(ventasPropias);
+
+const porcentajeDeVentasPropias = (ventasPropias*100)/ventasTotales;
+const porcentajeDeVentasAjenas = (ventasAjenas*100)/ventasTotales;
+const porcentajeDeVentasNegocio = (ventasDeNegocio*100)/ventasTotales;
+
+document.write("<table>");
+document.write("<thead><tr><th>Vendedor</th><th>Ventas Realizadas</th><th>Porcentaje que representa del negocio</th></tr></thead>");
+document.write("<tbody>");
+
+
+document.write("<tr>");
+document.write("<td>" + 'ventasPropias' + "</td>");
+document.write("<td>" + ventasPropias + "</td>");
+document.write("<td>" + parseInt(porcentajeDeVentasPropias) + '%' + "</td>");
+document.write("</tr>");
+
+
+document.write("<tr>");
+document.write("<td>" + 'ventasDeSocios' + "</td>");
+document.write("<td>" + ventasAjenas + "</td>");
+document.write("<td>" + parseInt(porcentajeDeVentasAjenas) + '%' + "</td>");
+document.write("</tr>");
+
+
+document.write("<tr>");
+document.write("<td>" + 'ventasDeOtrosNegocios' + "</td>");
+document.write("<td>" + ventasDeNegocio + "</td>");
+document.write("<td>" + parseInt(porcentajeDeVentasNegocio) + '%' +"</td>");
+document.write("</tr>");
+
+
+// Finalizar la tabla
+document.write("</tbody>");
+document.write("</table>");

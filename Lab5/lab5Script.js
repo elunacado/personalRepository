@@ -8,7 +8,7 @@ const porcentajeDeVentasPropias = (ventasPropias*100)/ventasTotales;
 const porcentajeDeVentasAjenas = (ventasAjenas*100)/ventasTotales;
 const porcentajeDeVentasNegocio = (ventasDeNegocio*100)/ventasTotales;
 
-document.write("<table>");
+document.write("<table class='responsive-table'>");
 document.write("<thead><tr><th>Vendedor</th><th>Ventas Realizadas</th><th>Porcentaje que representa del negocio</th></tr></thead>");
 document.write("<tbody>");
 

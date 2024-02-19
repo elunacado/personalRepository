@@ -28,18 +28,22 @@ function verify() {
     
     const symbols = /[!@#$%&]/g.test(p);
     const numbers = /[0-9]/g.test(p);
-    const capital = /[A-Z]/g.test(p);
+    const mayusculas = /[A-Z]/g.test(p);
+    const minusculas = /[a-z]/g.test(p);
 
     const warnSymbol = document.getElementById("symbolWarning");
     const warnNum = document.getElementById("numberWarning");
-    const warnCapital = document.getElementById("capitalWarning");
+    const warnMayusculas = document.getElementById("mayusculasWarning");
+    const warnMinusculas = document.getElementById("minusculasWarning");
+
     const successMessage = document.getElementById("successMessage");
 
     warnSymbol.textContent = symbols ? "" : "Asegúrate de que la contraseña incluya símbolos";
     warnNum.textContent = numbers ? "" : "Asegúrate de que la contraseña incluya números";
-    warnCapital.textContent = capital ? "" : "Asegúrate de que la contraseña incluya mayúsculas";
+    warnMayusculas.textContent = mayusculas ? "" : "Asegúrate de que la contraseña incluya mayúsculas";
+    warnMinusculas.textContent = minusculas ? "" : "Asegúrate de que la contraseña incluya minusculas";
     
-    if (warnSymbol.textContent === "" && warnNum.textContent === "" && warnCapital.textContent === "") {
+    if (warnSymbol.textContent === "" && warnNum.textContent === "" && warnMayusculas.textContent === "" && warnMinusculas.textContent === "") {
         successMessage.textContent = "La contraseña ha sido validada";
     } else {
         successMessage.textContent = "";

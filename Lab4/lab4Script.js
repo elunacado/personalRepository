@@ -66,15 +66,18 @@ let answer = 'Los numeros positivos son: '+ pos + '. Los numeros negativos son: 
 return answer;
 }
 
-function promedio(array) {
-    sum = 0;
-    for (let i = 0; i < array.length; i++) {
-        const element = array[i];
-        sum += element;
+function promedio(matriz) {
+    const promedios = [];
 
+    for (let i = 0; i < matriz.length; i++) {
+        let sum = 0;
+        for (let j = 0; j < matriz[i].length; j++) {
+            sum += matriz[i][j];
+        }
+        promedios.push(sum / matriz[i].length); // Calcula y guarda el promedio de cada subconjunto
     }
-    return sum;
-    
+
+    return promedios;
 }
 
 function inverse(num){
@@ -141,10 +144,9 @@ console.log(posAndNeg(array));
 */
 
 //Ejercicio 4
-/*
-arrayExercise2 = [1,2,3,4,5,6,7,8,9,10]
+arrayExercise2 = [[1,2,3,4,5],[6,7,8,9,10]]
 console.log(promedio(arrayExercise2))
-*/
+
 
 //Ejercicio 5
 /* 
@@ -154,6 +156,7 @@ console.log(promedio(arrayExercise2))
 */
 
 //Ejercicio 6
+/*
 const ventasPropias = prompt('Ingresa la cantidad de malangas que tu vendes')
 const ventasAjenas = prompt('Ingresa la cantidad de malangas que vende tu socio')
 const ventasDeNegocio = prompt('Ingresa la cantidad de malangas que vende el negocio al que le distribuyes')
@@ -192,4 +195,4 @@ document.write("</tr>");
 
 // Finalizar la tabla
 document.write("</tbody>");
-document.write("</table>");
+document.write("</table>");*/

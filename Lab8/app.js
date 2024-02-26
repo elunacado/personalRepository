@@ -10,9 +10,14 @@ const { loadavg } = require('os');
 //fileSystem('hola.txt', 'hola de nuevo archivo!')
 
 const server = http.createServer((req,resp) => {
-    resp.setHeader('Content-Type', 'text/html');
-    resp.write("Hola Ethan desde un html de Node")
-    resp.end();
+    if(req.url=="/"){
+        resp
+    } else if (req.url=="/construir") {
+        
+    } else {
+        resp.statusCode = 404;
+        resp.end();
+    }
 })
 
 server.listen(3000);

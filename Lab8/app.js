@@ -28,7 +28,14 @@ const server = http.createServer((req, resp) => {
             </head>
             <body>
                 <h1>Salen dos de pastor con piña</h1>
+                <button id="goBack">Go Back</button>
             </body>
+            <script>
+            // Add event listener to the button
+            document.getElementById('goBack').addEventListener('click', function() {
+                window.location.href = "/";
+            });
+            </script>
             </html>`);
         resp.end();
     } else {
@@ -53,3 +60,4 @@ const server = http.createServer((req, resp) => {
 server.listen(3000, () => {
     console.log('Server is running on port 3000');
 });
+

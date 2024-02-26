@@ -38,6 +38,29 @@ const server = http.createServer((req, resp) => {
             </script>
             </html>`);
         resp.end();
+    } else if(req.url === "/orden" && req.method === "GET") {
+        resp.write(
+            `<!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Document</title>
+                </head>
+                <body>
+                    <h1>¿De que sera su orden?</h1>
+                    <form id = "construir" method = "POST">
+                        <input type="textbox"></p>
+                        <button id="preparar">Preparar</button>
+                    </form>
+                    
+                </body>
+                </html>`);
+            resp.end();
+    } else if (req.url == "/orden" && req.method == "POST"){
+        req.on('data', (dato) => {
+            console.log(dato);
+        });
     } else {
         resp.statusCode = 404;
         resp.write(

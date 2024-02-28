@@ -1,6 +1,6 @@
 const fileSystem = require('fs');
 const http = require('http');
-const qs = require('querystring'); // Import the 'querystring' module
+const qs = require('querystring'); 
 
 const header = `
 <!DOCTYPE html>
@@ -27,8 +27,17 @@ const server = http.createServer((req, resp) => {
     if (req.url === "/") {
         resp.write(header)
         resp.write('<h1 class="title"> Bienvenido a la taqueria ¿De que quiere?</h1>')   
-        resp.write(footer)
-        resp.end();
+        fileSystem.readFile('ordenes.txt', 'utf8', (err, data) => {
+            if (err) {
+                console.error(err);
+                return;
+            }
+            resp.write(`<h2>Ordenes:</h2><p>${data}</p>`);
+            resp.write('<a href="/orden">Realizar otra orden</a>');
+            resp.write('<br>')
+            resp.write(footer);
+            resp.end();
+        });    
     } else if (req.url === "/pastor") {
         resp.write(header)
         resp.write(    
@@ -62,9 +71,8 @@ const server = http.createServer((req, resp) => {
                 if (err) throw err;
                 console.log('Orden guardada correctamente.');
             });
-            resp.statusCode = 302; // Redireccionamos al usuario después de enviar la orden
-            resp.setHeader('Location', '/'); // Redireccionamos al inicio
-            resp.end();
+            resp.statusCode = 302; 
+            resp.setHeader('Location', '/');
         });
         
     } else {

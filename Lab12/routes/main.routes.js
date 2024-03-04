@@ -1,26 +1,36 @@
 const  express = require("express");
 const router = express.Router();
 
+
 router.get('/',(req, res, next) =>{
-    res.send(`<!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Saying Hi</title>
-    </head>
-    <body>
-        <h1>Hi</h1>
-    </body>
-    </html>
-    `)
+    res.render('home.ejs');
     next();
 })
 
-router.get('/trayectoria-educativa',(req, res, next) => {
-    res.render('escolaridad.ejs')
+router.get('/aboutUs',(req, res, next) => {
+    res.render('aboutus.ejs')
     next();
     
+});
+
+router.get('/sabores',(req,res,next) => {
+    res.render('sabores.ejs')
+    next();
+})
+
+// GET 
+router.get('/contacto', (req, res) => {
+    res.render('contacto.ejs');
+});
+
+// POST 
+router.post('/contacto', (req, res) => {
+    const { nombre, email, mensaje } = req.body;
+    res.render('mensaje-enviado.ejs', { nombre, email, mensaje });
+});
+
+router.get('/resenas', (req, res) => {
+    res.render('resenas.ejs');
 });
 
 module.exports = router;

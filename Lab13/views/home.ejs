@@ -43,5 +43,30 @@
             </p>
         </div>
     </section>
-    </body>
-    </html>
+
+<!-- Table to display received messages -->
+<section class="section">
+    <div class="container">
+        <h2 class="title">Mensajes Recibidos</h2>
+        <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Correo</th>
+                    <th>Mensaje</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                <% data.forEach(contact => { %>
+                    <tr>
+                        <td><%= contact.nombre %></td>
+                        <td><%= contact.correo %></td>
+                        <td><%= contact.mensaje %></td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+</section>
+</body>
+</html>

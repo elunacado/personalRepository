@@ -4,23 +4,16 @@ const mainHandler = require('../controllers/main.controller');
 const aboutUsHandler = require('../controllers/aboutUs.controller')
 const saboresHandler = require('../controllers/sabores.controller')
 const resenasHandler = require('../controllers/resenas.controller')
+const contactoHandler = require('../controllers/contacto.controller')
 
+//GET
 router.get('/', mainHandler.get_main);
 router.get('/aboutUs',aboutUsHandler.get_aboutUs);
-router.get('/sabores',saboresHandler.get_sabores)
+router.get('/sabores',saboresHandler.get_sabores);
 router.get('/resenas', resenasHandler.get_resenas);
-
-
-// GET 
-router.get('/contacto', (req, res) => {
-    res.render('contacto.ejs');
-});
-
+router.get('/contacto',contactoHandler.get_contacto); 
 // POST 
-router.post('/contacto', (req, res) => {
-    const { nombre, email, mensaje } = req.body;
-    res.render('mensaje-enviado.ejs', { nombre, email, mensaje });
-});
+router.post('/contacto', contactoHandler.post_contacto);
 
 
 module.exports = router;

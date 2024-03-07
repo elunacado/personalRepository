@@ -3,8 +3,8 @@ const Contacto = require('../models/contacto.model');
 exports.get_main = async (req, res, next) => {
     try {
         // Fetch all contacts
-        const contacts = await Contacto.fetchAll();
-        res.render('home.ejs', { data: contacts });
+        const contactos = await Contacto.fetchAll();
+        res.render('home.ejs', { data: contactos });
 
     } catch (error) {
         // Handle errors

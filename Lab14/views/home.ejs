@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -44,6 +45,8 @@
         </div>
     </section>
 
+
+
 <!-- Table to display received messages -->
 <section class="section">
     <div class="container">
@@ -57,11 +60,11 @@
                 </tr>
             </thead>
             <tbody id="tableBody">
-                <% data.forEach(contact => { %>
+                <% data.forEach(contacto => { %>
                     <tr>
-                        <td><%= contact.nombre %></td>
-                        <td><%= contact.correo %></td>
-                        <td><%= contact.mensaje %></td>
+                        <td><%= contacto.nombre %></td>
+                        <td><%= contacto.correo %></td>
+                        <td><%= contacto.mensaje %></td>
                     </tr>
                 <% }); %>
             </tbody>

@@ -18,6 +18,21 @@ exports.post_contacto = (req, res) => {
     // Save the new contact
     newContact.save();
 
+    res.setHeader('Set-Cookie', 'ultimo-contacto='+req.body.nombre)
+
     // Redirect to the root URL
     res.redirect('/');
 };
+
+exports.get_root = (req, res, next) => {
+    console.log('Ruta /');
+    let ultimoContacto = req.get('Cookie');
+    if (ultimoContacto) {
+        ultimoContacto = ultimoContacto.split('=')[1];
+    } else {
+        ultimoContacto = '';
+    }
+    console.log(ultimoContacto);
+    res.render({ultimoContacto: ultimoContacto});
+}
+

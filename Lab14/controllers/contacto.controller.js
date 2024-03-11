@@ -1,9 +1,6 @@
-const { log } = require('console');
 const Contacto = require('../models/contacto.model');
 
-exports.get_contacto = (req, res) => {
-    res.render('contacto.ejs');
-};
+
 
 // Route to handle form submission
 exports.post_contacto = (req, res) => {
@@ -11,15 +8,28 @@ exports.post_contacto = (req, res) => {
     const nombre = req.body.nombre;
     const correo = req.body.email; // Note: 'email' instead of 'correo'
     const mensaje = req.body.mensaje;
-    console.log(req.body.nombre);
+    console.log(req.body);
     // Create a new contact
-    const nuevoContacto = new Contacto(nombre, correo, mensaje);
-    // Save the new contact
-    nuevoContacto.save();
+    const contacto = new Contacto(nombre, correo, mensaje);
+    contacto.save();
+    
 
-    res.setHeader('Set-Cookie', 'ultimoContacto=' + req.body.nombre)
-
-
+    res.setHeader('Set-Cookie', 'ultimoContacto=' + req.body.nombre );
+    res.redirect('/');
+};
+exports.get_contacto = (req, res) => {
+    console.log('Ruta /');
+    let ultimoContacto = req.get('Cookie');
+    
+    if (ultimoContacto){
+            ultimoContacto = ultimoContacto.split('=')[1];
+    } else {
+            ultimoContacto = ''
+    }
+    res.render('contacto.ejs', {
+        contacto: Contacto.fetchAll(),
+        cookie: ultimoContacto
+    });
 };
 
 exports.get_root = (req, res, next) => {
@@ -34,6 +44,6 @@ exports.get_root = (req, res, next) => {
     console.log(ultimoContacto);
     res.render('contacto', {
         contacto: Contacto.fetchAll(),
-        ultimoContacto: ultimoContacto
+        cookie: ultimoContacto
     })
 }

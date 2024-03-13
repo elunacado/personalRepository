@@ -39,6 +39,12 @@
         
     <% } %>
 
-</div>        
+</div>       
+
+<% if(ultima_obra != '') { %>
+
+    <div>La última construcción fue <%= ultima_obra %>.</div>
+
+<% } %>
 
 <%- include('includes/foot.ejs') %>

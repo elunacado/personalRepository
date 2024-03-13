@@ -11,14 +11,8 @@ const bodyParser = require('body-parser');
 
 app.use(bodyParser.urlencoded({extended: false}));
 
-//Middleware
-app.use((request, response, next) => {
-  console.log('Middleware!');
-  next(); //Le permite a la petición avanzar hacia el siguiente middleware
-});
-
 //Registrar el middleware con el módulo construcciones
-const rutasConstrucciones = require('./routes/construcciones.routes');
+const rutasConstrucciones = require('./routes/agregar.routes');
 
 app.use('/', rutasConstrucciones);
 

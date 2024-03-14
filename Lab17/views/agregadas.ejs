@@ -7,6 +7,12 @@
     <% for (let obra of obras) { %>
 
         <div class="column">
+            <% if(obras.length < 1) {%>
+                <div class="notification is-info">
+                <button class="delete"></button>
+                    No existe la construcción.            
+                </div>
+            <% }%>
             <div class="card">
                 <div class="card-image">
                 <figure class="image is-4by3">

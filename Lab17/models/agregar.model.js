@@ -1,9 +1,4 @@
-const obras = [
-    {
-        nombre: "Mona Lisa", 
-        imagen: "https://ichef.bbci.co.uk/ace/ws/640/cpsprodpb/C10F/production/_120032494_gettyimages-184254372-1.jpg",
-    }
-];
+const db = require('../util/database')
 
 module.exports = class Obras {
 
@@ -15,15 +10,28 @@ module.exports = class Obras {
 
     //Este método servirá para guardar de manera persistente el nuevo objeto. 
     save() {
-        obras.push({
-            nombre: this.nombre,
-            imagen: this.imagen,
-        }); //es lo mismo que construcciones.push(this);
+        return db.execute(
+            'INSERT INTO obra (nombre, imagen, username) VALUES (?, ?, "ethan")',
+            [this.nombre, this.imagen]
+        )
     }
 
     //Este método servirá para devolver los objetos del almacenamiento persistente.
     static fetchAll() {
-        return obras;
+        return db.execute('SELECT * FROM obra')
+    }
+
+    static fetchOne(id) {
+        return db.execute('SELECT * FROM obra WHERE id=?', [id]);
+    }
+
+    static fetch(id){
+        if (id) {
+            return this.fetchOne(id)
+        } else {
+            return this.fetchAll();
+        }
+
     }
 
 }

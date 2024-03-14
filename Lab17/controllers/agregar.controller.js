@@ -10,10 +10,15 @@ exports.get_obras = (request, response, next) => {
 exports.post_obras = (request, response, next) => {
     console.log(request.body);
     const obras = 
-        new Obras(request.body.nombre, request.body.imagen);
-    obras.save();
-    response.setHeader('Set-Cookie','ultima-obra=' + request.body.nombre + '; HttpOnly');
-    response.redirect('/');
+    new Obras(request.body.nombre, request.body.imagen);
+    
+    obras.save()
+        .then(([rows, fieldData]) => {
+            response.setHeader('Set-Cookie',
+                'ultima-obra=' + request.body.nombre + '; HttpOnly');
+            response.redirect('/');
+    })
+    .catch((error) => {console.log(error);})
 };
 
 exports.get_root = (request, response, next) => {
@@ -25,9 +30,17 @@ exports.get_root = (request, response, next) => {
         ultima_obra = ''
     }
     console.log(ultima_obra);
-    response.render('agregadas', {
-        obras: Obras.fetchAll(),
-        ultima_obra: ultima_obra,
-        username: request.session.username || '',
+
+    Obras.fetch(request.params.obras_id).then(([rows,fieldData]) => {
+        console.log(rows);
+        response.render('agregadas', {
+            obras: rows,
+            ultima_obra: ultima_obra,
+            username: request.session.username || '',
+        });
+    })
+    .catch((error) => {
+        console.log(error );
     });
+   
 }

@@ -1,0 +1,55 @@
+<%- include('includes/head.ejs') %>
+
+<h1 class="title">Hola mundo desde el Louvre</h1>
+
+<div class="columns">
+    <div class="column">
+        <% if(obras.length < 1) {%>
+            <div class="notification is-info">
+            <button class="delete"></button>
+                No existe la obra.            
+            </div>
+        <% }%>
+        
+    <% for (let obra of obras) { %>
+            <div class="card">
+                <div class="card-image">
+                <figure class="image is-4by3">
+                    <img src="<%= obra.imagen %>" alt="Imagen de <%= obra.nombre %>">
+                </figure>
+                </div>
+                <div class="card-content">
+                <div class="media">
+                    <div class="media-left">
+                    <figure class="image is-48x48">
+                        <img src="<%= obra.imagen %>" alt="Imagen de <%= obra.nombre %>">
+                    </figure>
+                    </div>
+                    <div class="media-content">
+                    <p class="title is-4"><%= obra.nombre %></p>
+                    <p class="subtitle is-6">@<%= obra.nombre%></p>
+                    </div>
+                </div>
+            
+                <div class="content">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Phasellus nec iaculis mauris. <a>@bulmaio</a>.
+                    <a href="#">#css</a> <a href="#">#responsive</a>
+                    <br>
+                    <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+                </div>
+                </div>
+            </div>
+        </div>
+        
+    <% } %>
+
+</div>       
+
+<% if(ultima_obra != '') { %>
+
+    <div>La última construcción fue <%= ultima_obra %>.</div>
+
+<% } %>
+
+<%- include('includes/foot.ejs') %>

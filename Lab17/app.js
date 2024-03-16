@@ -25,7 +25,7 @@ app.use('/users', rutasUsuarios);
 
 //Registrar el middleware con el módulo de agregar obras
 const rutasAgregar = require('./routes/agregar.routes');
-app.use('/obras', rutasAgregar);
+app.use('/agregadas', rutasAgregar);
 
 app.use((request, response, next) => {
   response.status(404);

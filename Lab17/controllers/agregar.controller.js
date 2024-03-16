@@ -16,7 +16,7 @@ exports.post_obras = (request, response, next) => {
         .then(([rows, fieldData]) => {
             response.setHeader('Set-Cookie',
                 'ultima-obra=' + request.body.nombre + '; HttpOnly');
-            response.redirect('/');
+            response.redirect('/agregadas');
     })
     .catch((error) => {console.log(error);})
 };
@@ -31,7 +31,7 @@ exports.get_root = (request, response, next) => {
     }
     console.log(ultima_obra);
 
-    Obras.fetch(request.params.obras_id).then(([rows,fieldData]) => {
+    Obras.fetch(request.params.agregadas_id).then(([rows,fieldData]) => {
         console.log(rows);
         response.render('agregadas', {
             obras: rows,

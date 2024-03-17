@@ -3,6 +3,7 @@ const Obras = require('../models/agregar.model');
 exports.get_obras = (request, response, next) => {
     response.render('agregar', {
         username: request.session.username || '',
+        csrfToken: request.csrfToken(),
     }); 
 
 };

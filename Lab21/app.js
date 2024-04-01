@@ -20,10 +20,6 @@ const bodyParser = require('body-parser');
 
 app.use(bodyParser.urlencoded({extended: false}));
 
-const csrf = require('csurf');
-const csrfProtection = csrf();
-app.use(csrfProtection);
-
 const rutasUsuarios = require('./routes/usuarios.routes');
 app.use('/users', rutasUsuarios);
 

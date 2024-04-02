@@ -27,7 +27,7 @@ const multer = require('multer');
 
   },
   filename: (request, file, callback) => {
-      callback(null, file.originalname);
+      callback(null, Number(new Date()).toString() + file.originalname);
   },
 });
 

@@ -20,6 +20,23 @@ const bodyParser = require('body-parser');
 
 app.use(bodyParser.urlencoded({extended: false}));
 
+const multer = require('multer');
+  const fileStorage = multer.diskStorage({
+  destination: (request, file, callback) => {
+      callback(null, 'public/uploads');
+
+  },
+  filename: (request, file, callback) => {
+      callback(null, file.originalname);
+  },
+});
+
+app.use(multer({ storage: fileStorage }).single('imagen'));
+
+const csrf = require('csurf');
+const csrfProtection = csrf();
+app.use(csrfProtection);
+
 const rutasUsuarios = require('./routes/usuarios.routes');
 app.use('/users', rutasUsuarios);
 

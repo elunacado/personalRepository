@@ -9,12 +9,13 @@ module.exports = class Obras {
     }
 
     //Este método servirá para guardar de manera persistente el nuevo objeto. 
-    save() {
+    save(username) {
         return db.execute(
-            'INSERT INTO obra (nombre, imagen, username) VALUES (?, ?, "ethan")',
-            [this.nombre, this.imagen]
-        )
+            'INSERT INTO obra (nombre, imagen, username) VALUES (?, ?, ?)',
+            [this.nombre, this.imagen, username]
+        );
     }
+    
 
     //Este método servirá para devolver los objetos del almacenamiento persistente.
     static fetchAll() {

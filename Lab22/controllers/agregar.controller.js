@@ -46,3 +46,11 @@ exports.get_root = (request, response, next) => {
     });
    
 }
+
+exports.get_buscar = (request, response, next) => {
+    Obras.search(request.params.valor_busqueda)
+        .then(([obras, fieldData]) => {
+            return response.status(200).json(obras.obras)
+        })
+        .catch((error) => {console.log(error)});
+};

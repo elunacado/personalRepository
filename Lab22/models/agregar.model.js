@@ -35,4 +35,7 @@ module.exports = class Obras {
 
     }
 
+    static search(valor_busqueda) {
+        return db.execute('SELECT * FROM obra WHERE nombre LIKE ?', ['%' + valor_busqueda + '%']);
+    }
 }

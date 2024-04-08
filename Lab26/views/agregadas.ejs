@@ -44,12 +44,32 @@
         
     <% } %>
 
-</div>       
+</div>      
 
-<% if(ultima_obra != '') { %>
-
-    <div>La última construcción fue <%= ultima_obra %>.</div>
-
-<% } %>
-
+<h1 id="quoteContainer"> Hello this is my Breaking Bad quote generator which is made with the API</h1>
+<button id="generateQuotes"> Press this button to generate a new quote</button>
 <%- include('includes/foot.ejs') %>
+<script>
+const quoteContainer = document.getElementById('quoteContainer');
+const button = document.getElementById('generateQuotes');
+
+button.addEventListener('click', function() {
+    console.log('clicked');
+    getQuotes()
+});   
+
+async function getQuotes() {
+    console.log('fetching...');
+    const res = await fetch('https://api.breakingbadquotes.xyz/v1/quotes');
+    const data = await res.json();
+    addtoDom(data[0]);
+}
+
+function addtoDom(quote) {
+    quoteContainer.innerHTML = `
+    <h3 id='quote'>${quote.quote}</h3>
+    <p id='author'> - ${quote.author}</p>
+    `
+}
+
+</script>

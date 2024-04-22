@@ -1,0 +1,72 @@
+@startuml
+actor User
+boundary routes
+boundary catalogo.ejs
+control catalogo
+entity catalogo.model
+database zebranalytics
+
+User -> routes: 1.GET/catalogo
+activate routes
+
+routes ->> catalogo: 2. getAllProducts(request, response)
+deactivate routes
+activate catalogo
+
+catalogo ->> catalogo.model: 3. fetchAllBrands()
+activate catalogo.model
+
+catalogo.model ->> zebranalytics: 4. SELECT DISTINCT m.Nombre AS NombreMarca FROM imagenmarca m
+deactivate catalogo.model
+activate zebranalytics
+
+catalogo<<-- zebranalytics: 5. Selecciona las marcas unicas
+deactivate zebranalytics
+
+catalogo ->> catalogo.model: 6. fetchAllProducts
+activate catalogo.model
+
+catalogo.model ->> zebranalytics: 7.  SELECT p.ItemCode, p.NombreMarca AS NombreMarca, p.WebsiteIMG, p.Title, p.Description, p.WebName
+deactivate catalogo.model
+activate zebranalytics
+
+zebranalytics -->> catalogo: 8. Selecciona los productos
+deactivate zebranalytics
+
+catalogo -->catalogo.ejs: 9. response.render(catalogo)
+deactivate catalogo
+activate catalogo.ejs
+
+catalogo.ejs --> User: 10. HTML
+deactivate catalogo.ejs
+
+alt Se busca por marca
+ 
+User -> routes: 11. POST/product
+activate routes
+
+routes -> catalogo: 12 getProductByBrand(request, response)
+deactivate routes
+activate catalogo
+
+catalogo ->> catalogo.model: 13. fetchProductByBrand(brand)
+
+activate catalogo.model
+
+catalogo.model ->> zebranalytics: 14. SELECT p.ItemCode, m.Nombre AS NombreMarca, p.WebsiteIMG, p.Title, p.Description, p.WebName , [brand]
+deactivate catalogo.model
+activate zebranalytics
+
+zebranalytics --> catalogo: 15. Se seleccionan los productos filtrados por la marca
+deactivate zebranalytics
+
+
+catalogo --> catalogo.ejs: 16. response.render('catalogo')
+deactivate catalogo
+activate catalogo.ejs
+
+catalogo.ejs -> User: 17. HTML
+deactivate catalogo.ejs
+
+end
+@enduml

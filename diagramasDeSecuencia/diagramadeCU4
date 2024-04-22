@@ -1,0 +1,86 @@
+@startuml
+actor User
+boundary routes
+boundary analiticas.ejs
+control analiticas
+entity analiticas.model
+database zebranalytics
+
+User ->> routes : 1. GET/analiticas
+activate routes
+
+routes ->> analiticas: 2. getAnaliticas(request, response)
+deactivate routes
+activate analiticas
+
+analiticas->> analiticas.model: 3. fetchAllBrands()
+activate analiticas.model
+
+
+analiticas.model->> zebranalytics: 4. SELECT DISTINCT m.Nombre AS NombreMarca FROM imagenmarca m
+deactivate analiticas.model
+activate zebranalytics
+
+analiticas<<-- zebranalytics: 5. Selecciona las marcas unicas
+deactivate zebranalytics
+
+analiticas.ejs <-- analiticas: 6. response.render('analiticas')
+activate analiticas.ejs
+deactivate analiticas
+
+analiticas.ejs --> User: 7.HTML
+deactivate analiticas.ejs
+
+alt filtrar las marcas
+User ->> routes: 8.POST/filteredAnalyticsBybrandAndYear
+activate routes
+
+routes ->> analiticas: 9. getSomeAnalyticsbyBrandAndYear(request, response)
+deactivate routes
+activate analiticas
+
+analiticas ->> analiticas.model: 10. fetchSomeAnalyticsByBrandAndYear(brand, year)
+activate analiticas.model
+
+analiticas.model ->> zebranalytics:11.  SELECT p.NombreMarca,YEAR(resena.FechaContestacion) AS Anio,MONTH(resena.FechaContestacion) AS Mes,AVG(resena.calificacion) AS PromedioCalificacionMensual,GROUP_CONCAT(resena.calificacion ORDER BY resena.FechaContestacion) AS CalificacionesArray [brand, year]
+deactivate analiticas.model
+activate zebranalytics
+
+zebranalytics -->> analiticas: 12. Selecciona el nombre de la marca, año, mes y un objeto con los promedios de las calificaciones mensuales y las filtra por la marca y el año
+deactivate zebranalytics
+
+analiticas --> analiticas.ejs: 13. response.render(filteredAnalyticsByBrandAndYear)
+deactivate analiticas
+activate analiticas.ejs
+
+analiticas.ejs --> User: 14. HTML
+deactivate analiticas.ejs
+
+else filtrar por ItemCode
+
+User ->> routes: 15. POST/filteredAnalyticsByitemCode
+activate routes
+
+routes ->> analiticas: 16. getSomeAnalyticsbyItemCode(request, response)
+deactivate routes
+activate analiticas
+
+analiticas ->> analiticas.model: 17. fetchSomeAnalyticsByItemCode(itemCode)
+activate analiticas.model
+
+analiticas.model ->> zebranalytics: 18. SELECT p.NombreMarca,YEAR(resena.FechaContestacion) AS Anio,MONTH(resena.FechaContestacion) AS Mes,AVG(resena.calificacion) AS PromedioCalificacionMensual,GROUP_CONCAT(resena.calificacion ORDER BY resena.FechaContestacion) AS CalificacionesArray [itemCode]
+deactivate analiticas.model
+activate zebranalytics
+
+zebranalytics -->> analiticas: 19. Selecciona el nombre de la marca, año, mes, y un objeto con los promedios de las calificaciones mensuales y las filtra por el codigo del producto
+deactivate zebranalytics
+
+analiticas --> analiticas.ejs: 20. response.render(filteredAnalyticsByItemCode)
+deactivate analiticas
+activate analiticas.ejs
+
+analiticas.ejs --> User: 21. HTML
+deactivate analiticas.ejs
+
+end
+@enduml

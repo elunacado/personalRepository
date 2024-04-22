@@ -1,0 +1,108 @@
+@startuml
+actor User
+boundary routes
+boundary review.ejs
+control reviews
+entity review
+database zebranalytics
+
+User ->> routes : 1. GET/reviews
+activate routes
+
+routes ->> reviews: 2. getReviews(request, response)
+deactivate routes
+activate reviews
+
+reviews ->> review: 3. fetchAllBrands()
+activate review
+
+review ->> zebranalytics: 4. SELECT DISTINCT m.Nombre AS NombreMarca FROM imagenmarca m
+deactivate review
+activate zebranalytics
+
+reviews<<-- zebranalytics: 5. Selecciona las marcas unicas
+deactivate zebranalytics
+
+reviews ->> review: 6.fetchAllReviews()
+activate review
+
+review ->> zebranalytics: 7.    SELECT r.calificacion, r.IDResena, r.FechaContestacion, r.ItemCode,r.correoComprador ,p.NombreMarca, rs.Visibilidad, rs.Titulo
+deactivate review
+activate zebranalytics
+
+reviews <<-- zebranalytics: 8. Se selecciona el ID, nombre de marca, codigo del Item, correoDeComprador, FechaDeContestación, Calificacion,Titulo y Visibilidad de las Marcas Unicas
+deactivate zebranalytics
+
+reviews --> review.ejs: 9.response.render('reviews')
+deactivate reviews
+activate review.ejs
+
+review.ejs --> User: 10.HTML
+deactivate review.ejs
+
+
+User ->> routes: 11. POST/reviews
+activate routes
+
+routes ->> reviews: 12. getSomeReviews(request, response)
+deactivate routes
+activate reviews
+
+
+alt Se busca por marca, cuartil y año
+
+reviews ->> review: 13. fetchAllBrands()
+activate review
+
+review ->> zebranalytics: 14. SELECT DISTINCT m.Nombre AS NombreMarca FROM imagenmarca m
+deactivate review
+activate zebranalytics
+
+reviews<<-- zebranalytics: 15. Selecciona las marcas unicas
+deactivate zebranalytics
+
+reviews ->> review: 16. fetchSome(brand, quarter, year)
+activate review
+
+review ->> zebranalytics: 17.  SELECT r.calificacion, r.IDResena, r.FechaContestacion, r.ItemCode,r.correoComprador ,p.NombreMarca, rs.Visibilidad, rs.Titulo [brand, quarter, year]
+deactivate review
+activate zebranalytics
+
+zebranalytics -->> reviews: 18. Se selecciona el ID, nombre de marca, codigo del Item, correoDeComprador, FechaDeContestación, Calificacion,Titulo y Visibilida dependiendo de la marca, año y cuartil
+
+deactivate zebranalytics
+
+else se busca por año y marca
+
+reviews ->> review: 19. fetchAllForYear(brand, year)
+activate review
+
+review ->> zebranalytics: 20.  SELECT r.calificacion, r.IDResena, r.FechaContestacion, r.ItemCode,r.correoComprador ,p.NombreMarca, rs.Visibilidad, rs.Titulo, [brand, year]
+deactivate review
+activate zebranalytics
+
+zebranalytics -->> reviews: 21. Se selecciona el ID, nombre de marca, codigo del Item, correoDeComprador, FechaDeContestación, Calificacion, Opinion, Titulo y Visibilidad dependiendo de la marca y año
+deactivate zebranalytics
+
+else se busca por marca y cuartil
+
+reviews ->> review: 22. fetchAllForQuarter(brand, quarter)
+activate review
+
+review ->> zebranalytics: SELECT r.calificacion, r.IDResena, r.FechaContestacion, r.ItemCode,r.correoComprador ,p.NombreMarca, rs.Visibilidad, rs.Titulo[brand, quarter]
+deactivate review
+activate zebranalytics
+
+zebranalytics -->> reviews: 24. Se selecciona el ID, nombre de marca, codigo del Item, correoDeComprador, FechaDeContestación, Calificacion, Opinion, Titulo y Visibilidad dependiendo de la marca y cuartil
+deactivate zebranalytics
+
+end
+
+reviews --> review.ejs: 25.response.render('reviewsfilteredreviews')
+deactivate reviews
+activate review.ejs
+
+review.ejs --> User: 26. HTML
+deactivate review.ejs
+
+@enduml

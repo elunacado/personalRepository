@@ -1,0 +1,27 @@
+@startuml
+actor User
+boundary routes
+boundary review.ejs
+control reviews
+entity review
+database zebranalytics
+User -> routes: 1.PUT/reviews
+activate routes
+
+routes -> reviews: 2. changeVisibility(request, response)
+activate reviews
+deactivate routes
+
+reviews ->> review: 3.changeVisibility(IdResena)
+activate review
+
+review ->> zebranalytics: 4. UPDATE(Respuestas rs ,[IdResena])
+deactivate review
+activate zebranalytics
+
+zebranalytics -->> reviews: 5. response.status(200).json({ message: 'Visibility changed successfully', result, csrfToken: newCsrfToken })
+deactivate zebranalytics
+
+reviews --> User: 6. Ve el botón alternar color entre verde y rojo
+deactivate reviews
+@enduml
